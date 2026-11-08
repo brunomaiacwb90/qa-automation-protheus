@@ -1,0 +1,16 @@
+
+{
+  "name": "qa-automation-protheus",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio de testes automatizados para ERP",
+  "scripts": {
+    "test:playwright": "playwright test",
+    "test:playwright:ui": "playwright test --ui",
+    "test:playwright:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "typescript": "^5.9.3"
+  }
+}
