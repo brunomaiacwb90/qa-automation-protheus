@@ -147,3 +147,13 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Dependências
+node_modules/
+
+# Arquivos temporários do Playwright
+playwright-report/
+test-results/
+
+# Backup de configuração
+tsconfig-backup/

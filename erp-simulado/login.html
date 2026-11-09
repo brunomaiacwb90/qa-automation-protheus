@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ERP Simulado - Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .login {
+      background: white;
+      padding: 32px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 4px 20px #0002;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      box-sizing: border-box;
+    }
+    button {
+      background: #1769aa;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .erro { color: #c62828; }
+  </style>
+</head>
+<body>
+  <main class="login">
+    <h2>ERP Simulado</h2>
+    <p>Ambiente demonstrativo para testes QA</p>
+
+    <form id="login-form">
+      <input data-testid="usuario"
+             placeholder="Usuário" required>
+      <input data-testid="senha"
+             type="password"
+             placeholder="Senha" required>
+      <button data-testid="entrar" type="submit">
+        Entrar
+      </button>
+    </form>
+
+    <p id="mensagem" role="alert" class="erro"></p>
+
+    <nav data-testid="menu-principal"
+         hidden>
+      Bem-vindo ao ERP Simulado!
+    </nav>
+  </main>
+
+  <script>
+    document.getElementById('login-form')
+      .addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const usuario = document.querySelector(
+          '[data-testid="usuario"]').value;
+        const senha = document.querySelector(
+          '[data-testid="senha"]').value;
+
+        if (usuario === 'qa_teste' &&
+            senha === 'Teste@123') {
+          document.getElementById('login-form').hidden = true;
+          document.getElementById('mensagem').textContent = '';
+          document.querySelector(
+            '[data-testid="menu-principal"]').hidden = false;
+        } else {
+          document.getElementById('mensagem').textContent =
+            'Usuário ou senha inválidos';
+        }
+      });
+  </script>
+</body>
+</html>

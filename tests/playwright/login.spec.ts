@@ -1,48 +1,38 @@
 
 import { test, expect } from '@playwright/test';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 /**
  * QA-001 - Login com credenciais válidas
- *
- * Módulo: Autenticação
+ * Sistema: ERP Simulado
  * Ferramenta: Playwright
  * Tipo: Teste funcional positivo
  *
  * Objetivo:
- * Validar que um usuário autorizado consegue
- * acessar o ambiente web do ERP.
- *
- * Pré-condições:
- * - Ambiente de homologação disponível
- * - Usuário ativo e autorizado
- * - Credenciais configuradas
+ * Validar o acesso com usuário e senha válidos.
  */
 
 test('QA-001 - Login com credenciais válidas', async ({ page }) => {
 
-  // 1. Obter os dados do ambiente de testes
-  const url = process.env.PROTHEUS_URL;
-  const usuario = process.env.PROTHEUS_USER;
-  const senha = process.env.PROTHEUS_PASSWORD;
+  // 1. Abrir a página do ERP simulado
+  const caminho = resolve('erp-simulado/login.html');
+  await page.goto(pathToFileURL(caminho).href);
 
-  if (!url || !usuario || !senha) {
-    throw new Error('Configuração do ambiente incompleta');
-  }
+  // 2. Preencher usuário e senha fictícios
+  await page.locator('[data-testid="usuario"]').fill('qa_teste');
+  await page.locator('[data-testid="senha"]').fill('Teste@123');
 
-  // 2. Acessar a aplicação
-  await page.goto(url);
-
-  // 3. Preencher as credenciais
-  // Seletores ilustrativos: adaptar à interface real
-  await page.locator('[data-testid="usuario"]').fill(usuario);
-  await page.locator('[data-testid="senha"]').fill(senha);
-
-  // 4. Confirmar o login
+  // 3. Clicar no botão Entrar
   await page.locator('[data-testid="entrar"]').click();
 
-  // 5. Validar o acesso ao sistema
+  // 4. Validar a mensagem de boas-vindas
   await expect(
     page.locator('[data-testid="menu-principal"]')
   ).toBeVisible();
+
+  await expect(
+    page.locator('[data-testid="menu-principal"]')
+  ).toContainText('Bem-vindo ao ERP Simulado!');
 
 });
